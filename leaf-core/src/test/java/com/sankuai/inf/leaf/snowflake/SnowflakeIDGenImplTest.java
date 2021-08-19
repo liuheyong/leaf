@@ -1,6 +1,6 @@
 package com.sankuai.inf.leaf.snowflake;
 
-import com.sankuai.inf.leaf.IDGen;
+import com.sankuai.inf.leaf.idgen.IDGen;
 import com.sankuai.inf.leaf.common.PropertyFactory;
 import com.sankuai.inf.leaf.common.Result;
 import org.junit.Test;

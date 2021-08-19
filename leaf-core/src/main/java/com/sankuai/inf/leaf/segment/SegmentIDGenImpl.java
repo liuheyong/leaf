@@ -1,6 +1,6 @@
 package com.sankuai.inf.leaf.segment;
 
-import com.sankuai.inf.leaf.IDGen;
+import com.sankuai.inf.leaf.idgen.IDGen;
 import com.sankuai.inf.leaf.common.Result;
 import com.sankuai.inf.leaf.common.Status;
 import com.sankuai.inf.leaf.segment.dao.IDAllocDao;

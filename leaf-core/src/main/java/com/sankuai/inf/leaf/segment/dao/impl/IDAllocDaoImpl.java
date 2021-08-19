@@ -28,47 +28,35 @@ public class IDAllocDaoImpl implements IDAllocDao {
 
     @Override
     public List<LeafAlloc> getAllLeafAllocs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession(false);
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(false)) {
             return sqlSession.selectList("com.sankuai.inf.leaf.segment.dao.IDAllocMapper.getAllLeafAllocs");
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Override
     public LeafAlloc updateMaxIdAndGetLeafAlloc(String tag) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             sqlSession.update("com.sankuai.inf.leaf.segment.dao.IDAllocMapper.updateMaxId", tag);
             LeafAlloc result = sqlSession.selectOne("com.sankuai.inf.leaf.segment.dao.IDAllocMapper.getLeafAlloc", tag);
             sqlSession.commit();
             return result;
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Override
     public LeafAlloc updateMaxIdByCustomStepAndGetLeafAlloc(LeafAlloc leafAlloc) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             sqlSession.update("com.sankuai.inf.leaf.segment.dao.IDAllocMapper.updateMaxIdByCustomStep", leafAlloc);
             LeafAlloc result = sqlSession.selectOne("com.sankuai.inf.leaf.segment.dao.IDAllocMapper.getLeafAlloc", leafAlloc.getKey());
             sqlSession.commit();
             return result;
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Override
     public List<String> getAllTags() {
-        SqlSession sqlSession = sqlSessionFactory.openSession(false);
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession(false)) {
             return sqlSession.selectList("com.sankuai.inf.leaf.segment.dao.IDAllocMapper.getAllTags");
-        } finally {
-            sqlSession.close();
         }
     }
 }
