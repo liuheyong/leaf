@@ -51,7 +51,6 @@ public class LeafMonitorController {
             sv.setStep1(buffer.getSegments()[1].getStep());
 
             data.put(entry.getKey(), sv);
-
         }
         logger.info("Cache info {}", data);
         model.addAttribute("data", data);
@@ -88,7 +87,7 @@ public class LeafMonitorController {
             long originTimestamp = (snowflakeId >> 22) + 1288834974657L;
             Date date = new Date(originTimestamp);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            map.put("timestamp", String.valueOf(originTimestamp) + "(" + sdf.format(date) + ")");
+            map.put("timestamp", originTimestamp + "(" + sdf.format(date) + ")");
 
             long workerId = (snowflakeId >> 12) ^ (snowflakeId >> 22 << 10);
             map.put("workerId", String.valueOf(workerId));

@@ -27,11 +27,16 @@ import java.util.concurrent.TimeUnit;
 
 public class SnowflakeZookeeperHolder {
     private static final Logger LOGGER = LoggerFactory.getLogger(SnowflakeZookeeperHolder.class);
+    //zookeeper目录前缀
     private static final String PREFIX_ZK_PATH = "/snowflake/" + PropertyFactory.getProperties().getProperty("leaf.name");
+    //本地缓存workerID文件目录
     private static final String PROP_PATH = System.getProperty("java.io.tmpdir") + File.separator + PropertyFactory.getProperties().getProperty("leaf.name") + "/leafconf/{port}/workerID.properties";
-    private static final String PATH_FOREVER = PREFIX_ZK_PATH + "/forever";//保存所有数据持久的节点
-    private String zk_AddressNode = null;//保存自身的key  ip:port-000000001
-    private String listenAddress = null;//保存自身的key ip:port
+    //保存所有数据持久的节点
+    private static final String PATH_FOREVER = PREFIX_ZK_PATH + "/forever";
+    //保存自身的key ip:port-000000001
+    private String zk_AddressNode = null;
+    //保存自身的key ip:port
+    private String listenAddress;
     private int workerID;
     private String ip;
     private String port;
@@ -124,7 +129,6 @@ public class SnowflakeZookeeperHolder {
                 updateNewData(curator, zk_AddressNode);
             }
         }, 1L, 3L, TimeUnit.SECONDS);//每3s上报数据
-
     }
 
     private boolean checkInitTimeStamp(CuratorFramework curator, String zk_AddressNode) throws Exception {
@@ -143,7 +147,10 @@ public class SnowflakeZookeeperHolder {
      */
     private String createNode(CuratorFramework curator) throws Exception {
         try {
-            return curator.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(PATH_FOREVER + "/" + listenAddress + "-", buildData().getBytes());
+            return curator.create()
+                    .creatingParentsIfNeeded()
+                    .withMode(CreateMode.PERSISTENT_SEQUENTIAL)
+                    .forPath(PATH_FOREVER + "/" + listenAddress + "-", buildData().getBytes());
         } catch (Exception e) {
             LOGGER.error("create node error msg {} ", e.getMessage());
             throw e;
@@ -216,7 +223,9 @@ public class SnowflakeZookeeperHolder {
     }
 
     private CuratorFramework createWithOptions(String connectionString, RetryPolicy retryPolicy, int connectionTimeoutMs, int sessionTimeoutMs) {
-        return CuratorFrameworkFactory.builder().connectString(connectionString)
+        return CuratorFrameworkFactory
+                .builder()
+                .connectString(connectionString)
                 .retryPolicy(retryPolicy)
                 .connectionTimeoutMs(connectionTimeoutMs)
                 .sessionTimeoutMs(sessionTimeoutMs)

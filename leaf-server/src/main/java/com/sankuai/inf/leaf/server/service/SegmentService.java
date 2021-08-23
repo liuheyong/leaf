@@ -1,10 +1,10 @@
 package com.sankuai.inf.leaf.server.service;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.sankuai.inf.leaf.idgen.IDGen;
 import com.sankuai.inf.leaf.common.PropertyFactory;
 import com.sankuai.inf.leaf.common.Result;
 import com.sankuai.inf.leaf.common.ZeroIDGen;
+import com.sankuai.inf.leaf.idgen.IDGen;
 import com.sankuai.inf.leaf.segment.SegmentIDGenImpl;
 import com.sankuai.inf.leaf.segment.dao.IDAllocDao;
 import com.sankuai.inf.leaf.segment.dao.impl.IDAllocDaoImpl;
@@ -19,8 +19,8 @@ import java.util.Properties;
 
 @Service("SegmentService")
 public class SegmentService {
-    private Logger logger = LoggerFactory.getLogger(SegmentService.class);
 
+    private Logger logger = LoggerFactory.getLogger(SegmentService.class);
     private IDGen idGen;
     private DruidDataSource dataSource;
 
